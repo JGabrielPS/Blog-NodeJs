@@ -23,6 +23,22 @@ app.get("/", async (req, res) => {
   });
 });
 
+//Funcionalidad de busqueda de post
+// app.use("/search/post", async (req, res) => {
+//   console.log(req.body);
+//   const blogposts = await BlogPost.find(
+//     {
+//       title: req.body,
+//     },
+//     (error, blogpost) => {
+//       console.log(error, blogpost);
+//     }
+//   );
+//   res.render("index", {
+//     blogposts,
+//   });
+// });
+
 app.get("/about", (req, res) => {
   res.render("about");
 });
@@ -31,8 +47,11 @@ app.get("/contact", (req, res) => {
   res.render("contact");
 });
 
-app.get("/post", (req, res) => {
-  res.render("post");
+app.get("/post/:id", async (req, res) => {
+  const blogpost = await BlogPost.findById(req.params.id);
+  res.render("post", {
+    blogpost,
+  });
 });
 
 app.get("/post/new", (req, res) => {

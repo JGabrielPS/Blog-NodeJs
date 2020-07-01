@@ -24,6 +24,15 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
+          <form class="form-inline" action="/search/post" method="GET">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <input
+              class="form-control form-control-sm ml-3 w-75"
+              type="text"
+              placeholder="Search"
+              aria-label="Search"
+            />
+          </form>
           <% for(let i = 0; i < blogposts.length; i++){ %>
           <div class="post-preview">
             <a href="/post/<%= blogposts[i]._id %>">
@@ -36,10 +45,10 @@
             </a>
             <p class="post-meta">
               Posted by
-              <a href="#">Start Bootstrap</a>
-              on September 24, 2019
+              <a href="#"><%= blogposts[i].username %></a>
+              on <%= blogposts[i].datePosted.toDateString() %>
             </p>
-          </div>  
+          </div>
           <hr />
           <% } %>
 
