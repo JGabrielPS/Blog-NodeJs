@@ -3,13 +3,15 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
-const validateMiddelWare = require('./middleware/validateMiddleWare');
+const validateMiddelWare = require("./middleware/validateMiddleWare");
 
 const homeController = require("./controllers/home");
 const aboutController = require("./controllers/about");
 const contactController = require("./controllers/contact");
 const newPostController = require("./controllers/newPost");
+const registerController = require("./controllers/register");
 const storePostController = require("./controllers/storePost");
+const storeUserController = require("./controllers/storeUser");
 const getPostController = require("./controllers/getPost");
 
 mongoose.connect("mongodb://localhost/my_database", { useNewUrlParser: true });
@@ -35,7 +37,11 @@ app.get("/contact", contactController);
 
 app.get("/post/new", newPostController);
 
+app.get("/auth/register", registerController);
+
 app.post("/post/store", storePostController);
+
+app.post("/user/register", storeUserController);
 
 app.get("/post/:id", getPostController);
 
