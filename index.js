@@ -10,6 +10,8 @@ const aboutController = require("./controllers/about");
 const contactController = require("./controllers/contact");
 const newPostController = require("./controllers/newPost");
 const registerController = require("./controllers/register");
+const loginController = require("./controllers/login");
+const loginUserController = require("./controllers/loginUser");
 const storePostController = require("./controllers/storePost");
 const storeUserController = require("./controllers/storeUser");
 const getPostController = require("./controllers/getPost");
@@ -38,6 +40,10 @@ app.get("/contact", contactController);
 app.get("/post/new", newPostController);
 
 app.get("/auth/register", registerController);
+
+app.get("/auth/login", loginController);
+
+app.post("/user/login", loginUserController);
 
 app.post("/post/store", storePostController);
 
