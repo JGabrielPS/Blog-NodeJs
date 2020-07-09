@@ -6,6 +6,7 @@ const fileUpload = require("express-fileupload");
 const validateMiddelWare = require("./middleware/validateMiddleWare");
 const expressSession = require("express-session");
 const authMiddleWare = require("./middleware/authMiddleWare");
+const redirectIfAuthenticatedMiddleWare = require("./middleware/redirectIfAuthenticatedMiddleWare");
 
 const homeController = require("./controllers/home");
 const aboutController = require("./controllers/about");
@@ -17,6 +18,7 @@ const loginUserController = require("./controllers/loginUser");
 const storePostController = require("./controllers/storePost");
 const storeUserController = require("./controllers/storeUser");
 const getPostController = require("./controllers/getPost");
+global.loggedIn = null;
 
 mongoose.connect("mongodb://localhost/my_database", { useNewUrlParser: true });
 
@@ -33,16 +35,28 @@ app.use(
     secret: "keyboard cat",
   })
 );
+app.use("*", (req, res, next) => {
+  loggedIn = req.session.userId;
+  next();
+});
 
 app.get("/", homeController);
 app.get("/about", aboutController);
 app.get("/contact", contactController);
 app.get("/post/new", authMiddleWare, newPostController);
-app.get("/auth/register", registerController);
-app.get("/auth/login", loginController);
-app.post("/user/login", loginUserController);
+app.get(
+  "/auth/register",
+  redirectIfAuthenticatedMiddleWare,
+  registerController
+);
+app.get("/auth/login", redirectIfAuthenticatedMiddleWare, loginController);
+app.post("/user/login", redirectIfAuthenticatedMiddleWare, loginUserController);
 app.post("/post/store", authMiddleWare, storePostController);
-app.post("/user/register", storeUserController);
+app.post(
+  "/user/register",
+  redirectIfAuthenticatedMiddleWare,
+  storeUserController
+);
 app.get("/post/:id", getPostController);
 
 app.listen(4000, () => {
