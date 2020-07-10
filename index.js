@@ -18,6 +18,7 @@ const loginUserController = require("./controllers/loginUser");
 const storePostController = require("./controllers/storePost");
 const storeUserController = require("./controllers/storeUser");
 const getPostController = require("./controllers/getPost");
+const logoutController = require("./controllers/logout");
 global.loggedIn = null;
 
 mongoose.connect("mongodb://localhost/my_database", { useNewUrlParser: true });
@@ -50,6 +51,7 @@ app.get(
   registerController
 );
 app.get("/auth/login", redirectIfAuthenticatedMiddleWare, loginController);
+app.get("/auth/logout", logoutController);
 app.post("/user/login", redirectIfAuthenticatedMiddleWare, loginUserController);
 app.post("/post/store", authMiddleWare, storePostController);
 app.post(
@@ -57,6 +59,7 @@ app.post(
   redirectIfAuthenticatedMiddleWare,
   storeUserController
 );
+app.use((req, res) => res.render("notfound"));
 app.get("/post/:id", getPostController);
 
 app.listen(4000, () => {
