@@ -59,8 +59,8 @@ app.post(
   redirectIfAuthenticatedMiddleWare,
   storeUserController
 );
-app.use((req, res) => res.render("notfound"));
 app.get("/post/:id", getPostController);
+app.use((req, res) => res.status(404).render("notfound"));
 
 app.listen(4000, () => {
   console.log("App listening in port 4000");

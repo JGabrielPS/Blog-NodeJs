@@ -1,8 +1,8 @@
-const BlogPost = require('../models/blogPost');
+const BlogPost = require("../models/blogPost");
 
 module.exports = async (req, res) => {
   const blogpost = await BlogPost.findById(req.params.id);
-  res.render("post", {
+  res.status(200).render("post", {
     blogpost,
   });
 };

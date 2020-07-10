@@ -1,3 +1,3 @@
 module.exports = (req, res) => {
-  res.render("register");
+  res.status(200).render("register");
 };

@@ -1,3 +1,3 @@
 module.exports = (req, res) => {
-  res.render("about");
+  res.status(200).render("about");
 };
