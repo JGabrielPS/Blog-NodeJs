@@ -7,6 +7,7 @@ const validateMiddelWare = require("./middleware/validateMiddleWare");
 const expressSession = require("express-session");
 const authMiddleWare = require("./middleware/authMiddleWare");
 const redirectIfAuthenticatedMiddleWare = require("./middleware/redirectIfAuthenticatedMiddleWare");
+const flash = require("connect-flash");
 
 const homeController = require("./controllers/home");
 const aboutController = require("./controllers/about");
@@ -40,6 +41,7 @@ app.use("*", (req, res, next) => {
   loggedIn = req.session.userId;
   next();
 });
+app.use(flash());
 
 app.get("/", homeController);
 app.get("/about", aboutController);
